@@ -19,26 +19,24 @@ resource "aws_security_group" "bta" {
   name        = "bta"
   description = "bta"
 
-  ingress = [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      from_port   = 25565
-      to_port     = 25565
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      from_port   = 19132
-      to_port     = 19132
-      protocol    = "udp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 25565
+    to_port     = 25565
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    from_port   = 19132
+    to_port     = 19132
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   egress {
     from_port        = 0
