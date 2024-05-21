@@ -1,4 +1,4 @@
-resource "aws_route53_zone" "bta" {
+resource "aws_route53_zone" "main" {
   name = "bta.corbinpersonal.me"
 }
 
