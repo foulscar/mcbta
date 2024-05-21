@@ -6,12 +6,12 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = remote_state.state_bucket.bucket
+    bucket         = "tf-remote-state20240521204719336100000002"
     key            = "terraform.tfstate"
     region         = "us-east-1"
     encrypt        = true
-    kms_key_id     = remote_state.kms_key.id
-    dynamodb_table = remote_state.dynamodb_table.id
+    kms_key_id     = "c14efd03-ee8b-4f4c-b47c-9bba63703660"
+    dynamodb_table = "tf-remote-state-lock"
   }
 }
 
