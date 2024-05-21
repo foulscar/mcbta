@@ -16,6 +16,11 @@ resource "aws_key_pair" "bta" {
   public_key = file("bta_public.pem")
 }
 
+resource "aws_eip" "bta" {
+  instance = aws_instance.bta.id
+  domain = "vpc"
+}
+
 resource "aws_security_group" "bta" {
   name        = "bta"
   description = "bta"

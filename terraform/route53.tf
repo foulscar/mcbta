@@ -7,5 +7,5 @@ resource "aws_route53_record" "server_cname" {
   name    = "play.bta.corbinpersonal.me"
   type    = "CNAME"
   ttl     = "300"
-  records = [aws_instance.bta.public_dns]
+  records = [aws_eip.bta.domain]
 }
