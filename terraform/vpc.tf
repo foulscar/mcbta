@@ -1,7 +1,7 @@
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
   tags = {
     Name = "main"
@@ -9,9 +9,9 @@ resource "aws_vpc" "main" {
 }
 
 resource "aws_subnet" "main_public" {
-  vpc_id = aws_vpc.main.id
-  cidr_block = "10.0.0.0/24"
-  availability_zone = "us-east-1"
+  vpc_id                  = aws_vpc.main.id
+  cidr_block              = "10.0.0.0/24"
+  availability_zone       = "us-east-1a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -28,13 +28,13 @@ resource "aws_route_table" "public" {
 }
 
 resource "aws_route" "igw_route" {
-  route_table_id = aws_route_table.public.id
+  route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id = aws_internet_gateway.ig.id
+  gateway_id             = aws_internet_gateway.ig.id
 }
 
 resource "aws_route_table_association" "public" {
-  subnet_id = aws_subnet.main_public.id
+  subnet_id      = aws_subnet.main_public.id
   route_table_id = aws_route_table.public.id
 }
 
@@ -49,7 +49,7 @@ resource "aws_security_group" "default" {
     protocol  = "-1"
     self      = true
   }
-  
+
   egress {
     from_port = "0"
     to_port   = "0"
