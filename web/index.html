@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BTA Control Panel</title>
+    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <h1 id="title">BTA Control Panel</h1>
+
+    <form id="form-main" action="">
+      <label for="otp">One Time Passcode</label>
+      <input type="number" id="otp" name="otp"><br><br>
+
+      <label for="shouldStart">Click to Toggle</label><br>
+      <div class="checkbox-wrapper-10">
+        <input class="tgl tgl-flip" id="shouldStart" type="checkbox" checked />
+        <label class="tgl-btn" data-tg-off="Stop" data-tg-on="Start" for="shouldStart"></label>
+      </div>
+      <h3>|</h3><h3>|</h3><h3>|</h3><h3>\/</h3>
+      <input id="submit-button" type="submit" value="Send to Server">
+    </form>
+
+    <script src="main.js"></script>
+  </body>
+</html>
