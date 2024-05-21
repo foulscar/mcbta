@@ -3,5 +3,6 @@ module "remote_state" {
 
   providers = {
     aws         = aws
+    aws.replica = aws.replica
   }
 }
