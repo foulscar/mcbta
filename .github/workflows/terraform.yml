@@ -1,0 +1,32 @@
+name: Terraform Deployment
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+on:
+  push:
+    paths:
+      - 'terraform/**' # Trigger workflow only if changes are pushed to /terraform directory
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        run: |
+          aws configure set credential_source OIDC
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -input=false
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' # Adjust branch name if needed
+        run: terraform apply -input=false tfplan
+
