@@ -5,7 +5,7 @@ resource "aws_route53_zone" "main" {
 resource "aws_route53_record" "server_cname" {
   zone_id = aws_route53_zone.main.zone_id
   name    = "play.bta.corbinpersonal.me"
-  type    = "CNAME"
+  type    = "A"
   ttl     = "300"
-  records = [aws_eip.bta.domain]
+  records = [aws_eip.bta.public_ip]
 }
