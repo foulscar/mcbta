@@ -5,6 +5,14 @@ terraform {
       version = "~> 5.0"
     }
   }
+  backend "s3" {
+    bucket         = remote_state.state_bucket.bucket
+    key            = "terraform.tfstate"
+    region         = "us-east-1"
+    encrypt        = true
+    kms_key_id     = remote_state.kms_key.id
+    dynamodb_table = remote_state.dynamodb_table.id
+  }
 }
 
 provider "aws" {
