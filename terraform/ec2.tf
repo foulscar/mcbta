@@ -18,7 +18,7 @@ resource "aws_key_pair" "bta" {
 
 resource "aws_eip" "bta" {
   instance = aws_instance.bta.id
-  domain = "vpc"
+  domain   = "vpc"
 }
 
 resource "aws_security_group" "bta" {
