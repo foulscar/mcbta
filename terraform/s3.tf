@@ -43,7 +43,7 @@ module "bta_panel_web_files" {
   base_dir = "${path.module}/../web"
 }
 
-resource "aws_s3_bucket_object" "bta_panel_web_files" {
+resource "aws_s3_object" "bta_panel_web_files" {
   for_each = module.bta_panel_web_files.files
 
   bucket       = aws_s3_bucket.bta_panel.id

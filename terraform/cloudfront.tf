@@ -5,7 +5,7 @@ resource "aws_cloudfront_distribution" "bta_panel" {
 
   origin {
     origin_id   = "${aws_s3_bucket.bta_panel.id}-origin"
-    domain_name = aws_s3_bucket.bta_panel.domain_name
+    domain_name = aws_s3_bucket_website_configuration.bta_panel.website_domain
     custom_origin_config {
       http_port              = 80
       https_port             = 443
