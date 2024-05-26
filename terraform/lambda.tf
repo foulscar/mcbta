@@ -13,6 +13,13 @@ resource "aws_lambda_function" "btaAPIOperate" {
   }
 }
 
+resource "aws_lambda_permission" "btaAPIOperate" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.btaAPIOperate.function_name
+  principal     = "apigateway.amazonaws.com"
+}
+
 resource "aws_lambda_layer_version" "pyotp" {
   layer_name          = "pyotp"
   filename            = "${path.module}/../lambdas/pyotp.zip"
@@ -34,4 +41,11 @@ resource "aws_lambda_function" "btaAPIAuthAdmin" {
       SECRET_ID = aws_secretsmanager_secret.btaAPIAuthTOTPKey.id
     }
   }
+}
+
+resource "aws_lambda_permission" "btaAPIAuthAdmin" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.btaAPIAuthAdmin.function_name
+  principal     = "apigateway.amazonaws.com"
 }
