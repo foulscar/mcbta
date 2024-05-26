@@ -41,8 +41,11 @@ resource "aws_apigatewayv2_stage" "bta_main" {
   }
 
   default_route_settings {
-    logging_level      = "INFO"
-    data_trace_enabled = true
+    detailed_metrics_enabled = true
+    logging_level            = "INFO"
+    data_trace_enabled       = true
+    throttling_burst_limit   = 2
+    throttling_rate_limit    = 5
   }
 }
 
