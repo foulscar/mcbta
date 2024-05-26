@@ -11,14 +11,14 @@ resource "aws_route53_record" "server_cname" {
 }
 
 resource "aws_route53_record" "bta_api" {
-  name    = aws_api_gateway_domain_name.bta.domain_name
+  name    = aws_apigatewayv2_domain_name.bta.domain_name
   type    = "A"
   zone_id = aws_route53_zone.main.id
 
   alias {
     evaluate_target_health = true
-    name                   = aws_api_gateway_domain_name.bta.cloudfront_domain_name
-    zone_id                = aws_api_gateway_domain_name.bta.cloudfront_zone_id
+    name                   = aws_apigatewayv2_domain_name.bta.cloudfront_domain_name
+    zone_id                = aws_apigatewayv2_domain_name.bta.cloudfront_zone_id
   }
 }
 
