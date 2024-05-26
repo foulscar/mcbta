@@ -17,8 +17,8 @@ resource "aws_route53_record" "bta_api" {
 
   alias {
     evaluate_target_health = true
-    name                   = aws_apigatewayv2_domain_name.bta.cloudfront_domain_name
-    zone_id                = aws_apigatewayv2_domain_name.bta.cloudfront_zone_id
+    name                   = aws_apigatewayv2_domain_name.bta.domain_name_configuration.target_domain_name
+    zone_id                = aws_apigatewayv2_domain_name.bta.domain_name_configuration.hosted_zone_id
   }
 }
 
