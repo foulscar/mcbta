@@ -2,7 +2,8 @@ document.getElementById('form-main').addEventListener('submit', function(event) 
     event.preventDefault(); // Prevent default form submission
 
     // Get the OTP value
-    var otp = document.getElementById('otp').value;
+    var otpNUM = document.getElementById('otp').value;
+    var otp = otpNUM.toString();
 
     // Send data to API as JSON with OTP as Bearer token
     fetch('https://api.bta.corbinpersonal.me/operate', {
@@ -15,12 +16,8 @@ document.getElementById('form-main').addEventListener('submit', function(event) 
             shouldStart: document.getElementById('shouldStart').checked
         })
     })
-    .then(response => {
-        if (response.ok) {
-            alert('Success');
-        } else {
-            alert('Error sending data:', response.statusText);
-        }
+    .then(data => {
+        aler(data.body.message);
     })
     .catch(error => {
         alert('Error:', error);
