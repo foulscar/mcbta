@@ -16,6 +16,27 @@ resource "aws_apigatewayv2_stage" "bta_main" {
   api_id      = aws_apigatewayv2_api.bta.id
   name        = "main"
   auto_deploy = true
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.bta_api_log_group.arn
+    format = jsonencode({
+      requestId      = "$context.requestId",
+      ip             = "$context.identity.sourceIp",
+      caller         = "$context.identity.caller",
+      user           = "$context.identity.user",
+      requestTime    = "$context.requestTime",
+      httpMethod     = "$context.httpMethod",
+      resourcePath   = "$context.resourcePath",
+      status         = "$context.status",
+      protocol       = "$context.protocol",
+      responseLength = "$context.responseLength"
+    })
+  }
+
+  default_route_settings {
+    logging_level      = "INFO"
+    data_trace_enabled = true
+  }
 }
 
 resource "aws_apigatewayv2_api_mapping" "bta" {
@@ -29,7 +50,7 @@ resource "aws_apigatewayv2_api_mapping" "bta" {
 resource "aws_apigatewayv2_authorizer" "btaAdmin" {
   api_id                            = aws_apigatewayv2_api.bta.id
   authorizer_type                   = "REQUEST"
-  identity_sources = [ "$request.header.Authorization" ]
+  identity_sources                  = ["$request.header.Authorization"]
   enable_simple_responses           = true
   name                              = "btaAdmin"
   authorizer_uri                    = aws_lambda_function.btaAPIAuthAdmin.invoke_arn
