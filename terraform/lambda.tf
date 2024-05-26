@@ -1,6 +1,6 @@
 provider "random" {}
 
-data "random_string" "trigger" {
+resource "random_string" "trigger" {
   length  = 8
   special = false
 }
@@ -10,7 +10,7 @@ data "archive_file" "btaAPIOperate" {
   source_dir  = "${path.module}/../lambdas/btaAPIOperate"
   output_path = "${path.module}/../lambdas/btaAPIOperate.zip"
 
-  depends_on = [ data.random_string.trigger ]
+  depends_on = [ random_string.trigger ]
 }
 
 resource "aws_lambda_function" "btaAPIOperate" {
@@ -33,7 +33,7 @@ data "archive_file" "btaAPIAuthAdmin" {
   source_dir  = "${path.module}/../lambdas/btaAPIAuthAdmin"
   output_path = "${path.module}/../lambdas/btaAPIAuthAdmin.zip"
 
-  depends_on = [ data.random_string.trigger ]
+  depends_on = [ random_string.trigger ]
 }
 
 resource "aws_lambda_function" "btaAPIAuthAdmin" {
