@@ -33,5 +33,6 @@ resource "aws_apigatewayv2_route" "btaOperate" {
   api_id = aws_apigatewayv2_api.bta.id
   route_key = "POST /operate"
   target = "integrations/${aws_apigatewayv2_integration.btaOperate.id}"
+  authorization_type = "CUSTOM"
   authorizer_id = aws_apigatewayv2_authorizer.btaAdmin.id
 }
