@@ -1,10 +1,27 @@
 import json
+import os
 import boto3
 import pyotp
-import base64
 
 def lambda_handler(event, context):
-    
+    secretID = os.getenv("SECRET_ID")
+
+    client = boto3.client("secretsmanager")
+    totpSecretKey = client.get_secret_value(SecretId=secretID)
+    totp = pyotp.TOTP(totpSecretKey)
+
+    totpClientToken = event["authorizationToken"]
+
+    if totp.verify(totpClientToken):
+        response = generatePolicy('user', 'Allow', event['methodArn'])
+    else:
+        response = generatePolicy('user', 'DENY', event['methodArn'])
+    try:
+        return json.loads(response)
+    except BaseException:
+        print("error")
+        return 'unauthorized'
+
 
 def generatePolicy(principalId, effect, resource):
     authResponse = {}

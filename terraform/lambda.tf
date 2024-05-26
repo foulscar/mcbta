@@ -18,3 +18,24 @@ resource "aws_lambda_function" "btaAPIOperate" {
     }
   }
 }
+
+data "archive_file" "btaAPIAuthAdmin" {
+  type        = "zip"
+  source_dir  = "${path.module}/../lambdas/btaAPIAuthAdmin"
+  output_path = "${path.module}/../lambdas/btaAPIAuthAdmin.zip"
+}
+
+resource "aws_lambda_function" "btaAPIAuthAdmin" {
+  filename      = data.archive_file.btaAPIAuthAdmin.output_path
+  function_name = "btaAPIAuthAdmin"
+  role          = aws_iam_role.btaAPIAuthAdmin.arn
+  handler       = "lambda_handler.lambda_handler"
+  runtime       = "python3.12"
+  depends_on    = [aws_iam_role_policy_attachment.btaAPIAuthAdmin]
+
+  environment {
+    variables = {
+      SECRET_ID = aws_secretsmanager_secret.btaAPIAuthTOTPKey.id
+    }
+  }
+}
