@@ -15,6 +15,10 @@ resource "aws_iam_role" "btaAPIOperate" {
  ]
 }
 EOF
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  ]
 }
 
 data "aws_iam_policy_document" "btaAPIOperate" {
@@ -58,6 +62,10 @@ resource "aws_iam_role" "btaAPIAuthAdmin" {
  ]
 }
 EOF
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+  ]
 }
 
 data "aws_iam_policy_document" "btaAPIAuthAdmin" {
