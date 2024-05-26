@@ -22,7 +22,7 @@ data "aws_iam_policy_document" "btaAPIOperate" {
     actions = [
       "ec2:DescribeInstances",
       "ec2:StartInstances",
-      "ec2LStopInstances"
+      "ec2:StopInstances"
     ]
 
     resources = [aws_instance.bta.arn]
