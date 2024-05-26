@@ -28,7 +28,8 @@ resource "aws_apigatewayv2_api_mapping" "bta" {
 
 resource "aws_apigatewayv2_authorizer" "btaAdmin" {
   api_id                            = aws_apigatewayv2_api.bta.id
-  authorizer_type                   = "JWT"
+  authorizer_type                   = "REQUEST"
+  identity_sources = [ "$request.header.Authorization" ]
   enable_simple_responses           = true
   name                              = "btaAdmin"
   authorizer_uri                    = aws_lambda_function.btaAPIAuthAdmin.invoke_arn
