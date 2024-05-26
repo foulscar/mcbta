@@ -16,7 +16,7 @@ resource "aws_apigatewayv2_stage" "bta_main" {
 
 resource "aws_apigatewayv2_authorizer" "btaAdmin" {
   api_id = aws_apigatewayv2_api.bta.id
-  authorizer_type = "JWT"
+  authorizer_type = "REQUEST"
   name = "btaAdmin"
   authorizer_uri = aws_lambda_function.btaAPIAuthAdmin.invoke_arn
   authorizer_payload_format_version = "2.0"
