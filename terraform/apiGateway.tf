@@ -3,15 +3,27 @@ resource "aws_apigatewayv2_api" "bta" {
   protocol_type = "HTTP"
 }
 
-resource "aws_api_gateway_domain_name" "bta" {
-  certificate_arn = aws_acm_certificate.bta_api.arn
+resource "aws_apigatewayv2_domain_name" "bta" {
   domain_name     = "api.bta.corbinpersonal.me"
+  domain_name_configuration {
+    certificate_arn = aws_acm_certificate.bta_api.arn
+    endpoint_type = "REGIONAL"
+    security_policy = "TLS_1_2"
+  }
 }
 
 resource "aws_apigatewayv2_stage" "bta_main" {
   api_id = aws_apigatewayv2_api.bta.id
-  name = "$default"
+  name = "main"
   auto_deploy = true
+}
+
+resource "aws_apigatewayv2_api_mapping" "bta" {
+  api_id = aws_apigatewayv2_api.bta.id
+  domain_name = aws_apigatewayv2_domain_name.bta.domain_name
+  stage = "main"
+
+  depends_on = [ aws_apigatewayv2_stage.bta_main ]
 }
 
 resource "aws_apigatewayv2_authorizer" "btaAdmin" {
