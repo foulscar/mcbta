@@ -1,5 +1,5 @@
 resource "aws_lambda_function" "btaAPIOperate" {
-  filename      = data.archive_file.btaAPIOperate.output_path
+  filename      = "${path.module}/../lambdas/btaAPIOperate.zip"
   function_name = "btaAPIOperate"
   role          = aws_iam_role.btaAPIOperate.arn
   handler       = "lambda_handler.lambda_handler"
@@ -14,7 +14,7 @@ resource "aws_lambda_function" "btaAPIOperate" {
 }
 
 resource "aws_lambda_function" "btaAPIAuthAdmin" {
-  filename      = data.archive_file.btaAPIAuthAdmin.output_path
+  filename      = "${path.module}/../lambdas/btaAPIAuthAdmin.zip"
   function_name = "btaAPIAuthAdmin"
   role          = aws_iam_role.btaAPIAuthAdmin.arn
   handler       = "lambda_handler.lambda_handler"
