@@ -36,7 +36,8 @@ resource "aws_apigatewayv2_stage" "bta_main" {
       status            = "$context.status",
       protocol          = "$context.protocol",
       responseLength    = "$context.responseLength",
-      "authorizerError" = "$context.authorizer.error"
+      authorizerError   = "$context.authorizer.error"
+      lambdaOutput      = "$context.integration.output"
     })
   }
 
