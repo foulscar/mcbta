@@ -22,9 +22,18 @@ resource "aws_apigatewayv2_authorizer" "btaAdmin" {
   authorizer_payload_format_version = "2.0"
 }
 
-resource "aws_apigatewayv2_route" "btaAuthAdmin" {
+resource "aws_apigatewayv2_integration" "btaOperate" {
   api_id = aws_apigatewayv2_api.bta.id
-  route_key = "$default"
+  integration_type = "AWS_PROXY"
+  integration_method = "POST"
+  integration_uri = aws_lambda_function.btaAPIOperate.invoke_arn
+}
+
+resource "aws_apigatewayv2_route" "btaOperate" {
+  api_id = aws_apigatewayv2_api.bta.id
+  route_key = "/operate"
   target = "integrations/${aws_lambda_function.btaAPIAuthAdmin.id}"
   authorizer_id = aws_apigatewayv2_authorizer.btaAdmin.id
+
+  depends_on = [ aws_apigatewayv2_integration.btaOperate ]
 }
