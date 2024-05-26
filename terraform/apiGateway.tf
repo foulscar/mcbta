@@ -26,18 +26,18 @@ resource "aws_apigatewayv2_stage" "bta_main" {
   access_log_settings {
     destination_arn = aws_cloudwatch_log_group.bta_api_log_group.arn
     format = jsonencode({
-      requestId         = "$context.requestId",
-      ip                = "$context.identity.sourceIp",
-      caller            = "$context.identity.caller",
-      user              = "$context.identity.user",
-      requestTime       = "$context.requestTime",
-      httpMethod        = "$context.httpMethod",
-      resourcePath      = "$context.resourcePath",
-      status            = "$context.status",
-      protocol          = "$context.protocol",
-      responseLength    = "$context.responseLength",
-      authorizerError   = "$context.authorizer.error"
-      lambdaOutput      = "$context.integration.output"
+      requestId       = "$context.requestId",
+      ip              = "$context.identity.sourceIp",
+      caller          = "$context.identity.caller",
+      user            = "$context.identity.user",
+      requestTime     = "$context.requestTime",
+      httpMethod      = "$context.httpMethod",
+      resourcePath    = "$context.resourcePath",
+      status          = "$context.status",
+      protocol        = "$context.protocol",
+      responseLength  = "$context.responseLength",
+      authorizerError = "$context.authorizer.error"
+      lambdaOutput    = "$context.integration.output"
     })
   }
 

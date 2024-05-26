@@ -1,6 +1,6 @@
 resource "aws_instance" "bta" {
   ami                         = "ami-04b70fa74e45c3917"
-  instance_type               = "t2.small"
+  instance_type               = "t2.large"
   subnet_id                   = aws_subnet.main_public.id
   vpc_security_group_ids      = [aws_security_group.bta.id]
   key_name                    = aws_key_pair.bta.key_name

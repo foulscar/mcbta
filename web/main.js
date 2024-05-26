@@ -6,7 +6,7 @@ document.getElementById('form-main').addEventListener('submit', function(event) 
     var otp = otpNUM.toString();
 
     // Send data to API as JSON with OTP as Bearer token
-    fetch('https://api.bta.corbinpersonal.me/operate', {
+    fetch('https://cors-anywhere.herokuapp.com/https://api.bta.corbinpersonal.me/operate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -16,8 +16,14 @@ document.getElementById('form-main').addEventListener('submit', function(event) 
             shouldStart: document.getElementById('shouldStart').checked
         })
     })
+    .then(response => {
+      if (response.status === 403) {
+        alert("OTP unauthorized. Try again.");
+      }
+      return response.json();
+    })
     .then(data => {
-        aler(data.body.message);
+      alert(data.message);
     })
     .catch(error => {
         alert('Error:', error);
