@@ -2,7 +2,7 @@ resource "aws_lambda_function" "btaAPIOperate" {
   filename      = "${path.module}/../lambdas/btaAPIOperate.zip"
   function_name = "btaAPIOperate"
   role          = aws_iam_role.btaAPIOperate.arn
-  handler       = "lambda_handler.lambda_handler"
+  handler       = "lambda_function.lambda_handler"
   runtime       = "python3.12"
   depends_on    = [aws_iam_role_policy_attachment.btaAPIOperate]
 
@@ -13,13 +13,21 @@ resource "aws_lambda_function" "btaAPIOperate" {
   }
 }
 
+resource "aws_lambda_layer_version" "pyotp" {
+  layer_name          = "pyotp"
+  filename            = "${path.module}/../lambdas/pyotp.zip"
+  compatible_runtimes = ["python3.12"]
+}
+
 resource "aws_lambda_function" "btaAPIAuthAdmin" {
   filename      = "${path.module}/../lambdas/btaAPIAuthAdmin.zip"
   function_name = "btaAPIAuthAdmin"
   role          = aws_iam_role.btaAPIAuthAdmin.arn
-  handler       = "lambda_handler.lambda_handler"
+  handler       = "lambda_function.lambda_handler"
   runtime       = "python3.12"
   depends_on    = [aws_iam_role_policy_attachment.btaAPIAuthAdmin]
+
+  layers = [aws_lambda_layer_version.pyotp.arn]
 
   environment {
     variables = {
