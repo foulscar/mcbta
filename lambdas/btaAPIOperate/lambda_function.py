@@ -8,20 +8,15 @@ instanceID = os.getenv("INSTANCE_ID")
 def lambda_handler(event, context):
     statusCode = 0
     responseMessage = ""
+
     requestBodyRaw = event.get("body")
     if requestBodyRaw is None:
-        return {
-            "statusCode": 400,
-            "body": "No body found in request"
-        }
+        return generateResponse(400, "No body found in request")
 
     try:
         requestBody = json.loads(requestBodyRaw)
     except json.JSONDecodeError as e:
-        return {
-            'statusCode': 400,
-            'body': "Invalid JSON Format"
-        }
+        return generateResponse(400, "Body JSON is invalid")
 
     shouldStart = requestBody.get("shouldStart")
     if instanceID is None:
@@ -33,10 +28,7 @@ def lambda_handler(event, context):
     else:
         statusCode, responseMessage = operateBTAInstance(shouldStart)
 
-    return {
-        "statusCode": statusCode,
-        "body": responseMessage
-    }
+    return generateResponse(statusCode, responseMessage)
 
 def operateBTAInstance(shouldStart):
     responseMessage = ""
@@ -47,3 +39,9 @@ def operateBTAInstance(shouldStart):
         ec2Client.stop_instances(InstanceIds=[instanceID])
         responseMessage = "Stopping BTA Server..."
     return 200, responseMessage
+
+def generateResponse(statusCode, responseMessage):
+    return {
+        "statusCode": statusCode,
+        "body": json.dumps({"message": responseMessage})
+    }
