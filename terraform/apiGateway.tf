@@ -1,6 +1,12 @@
 resource "aws_apigatewayv2_api" "bta" {
   name          = "bta-http-api"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_origins = ["http://localhost", "https://bta.corbinpersonal.me"]
+    allow_methods = ["OPTIONS", "POST"]
+    allow_headers = ["*"]
+    max_age       = 3000
+  }
 }
 
 resource "aws_apigatewayv2_domain_name" "bta" {
@@ -46,17 +52,6 @@ resource "aws_apigatewayv2_api_mapping" "bta" {
   stage       = "main"
 
   depends_on = [aws_apigatewayv2_stage.bta_main]
-}
-
-resource "aws_apigatewayv2_cors_configuration" "bta" {
-  api_id = aws_apigatewayv2_api.bta.id
-
-  cors {
-    allow_origins = ["localhost", "bta.corbinpersonal.me"]
-    allow_methods = ["OPTIONS", "POST"]
-    allow_headers = ["*"]
-    max_age       = 3000
-  }
 }
 
 resource "aws_apigatewayv2_authorizer" "btaAdmin" {
