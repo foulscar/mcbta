@@ -51,5 +51,5 @@ resource "aws_lambda_permission" "btaAPIAuthAdmin" {
   function_name = aws_lambda_function.btaAPIAuthAdmin.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.bta.execution_arn}/*/*/*"
+  source_arn = "${aws_apigatewayv2_api.bta.execution_arn}/authorizers/*"
 }
