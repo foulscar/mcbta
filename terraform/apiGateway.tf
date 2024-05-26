@@ -31,7 +31,7 @@ resource "aws_apigatewayv2_integration" "btaOperate" {
 
 resource "aws_apigatewayv2_route" "btaOperate" {
   api_id = aws_apigatewayv2_api.bta.id
-  route_key = "/operate"
+  route_key = "POST /operate"
   target = "integrations/${aws_lambda_function.btaAPIAuthAdmin.id}"
   authorizer_id = aws_apigatewayv2_authorizer.btaAdmin.id
 
