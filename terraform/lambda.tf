@@ -18,6 +18,8 @@ resource "aws_lambda_permission" "btaAPIOperate" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.btaAPIOperate.function_name
   principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.bta.execution_arn}/*/*/*"
 }
 
 resource "aws_lambda_layer_version" "pyotp" {
@@ -48,4 +50,6 @@ resource "aws_lambda_permission" "btaAPIAuthAdmin" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.btaAPIAuthAdmin.function_name
   principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.bta.execution_arn}/*/*/*"
 }
