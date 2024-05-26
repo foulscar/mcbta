@@ -66,7 +66,7 @@ data "aws_iam_policy_document" "btaAPIAuthAdmin" {
       "secretsmanager:GetSecretValue"
     ]
 
-    resources = ["${aws_secretsmanager_secret.btaAPIAuthTOTPKey.arn}/*"]
+    resources = [aws_secretsmanager_secret.btaAPIAuthTOTPKey.arn]
   }
 }
 
