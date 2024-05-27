@@ -39,7 +39,7 @@ resource "aws_s3_bucket_policy" "bta_panel_oac_access" {
         Effect    = "Allow"
         Principal = aws_cloudfront_distribution.bta_panel.arn
         Action    = "s3:GetObject"
-        Resources = [
+        Resource = [
           "${aws_s3_bucket.bta_panel.arn}",
           "${aws_s3_bucket.bta_panel.arn}/*"
         ]
