@@ -2,7 +2,7 @@ resource "aws_apigatewayv2_api" "bta" {
   name          = "bta-http-api"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = ["http://localhost", "https://bta.corbinpersonal.me"]
+    allow_origins = ["https://panel.bta.corbinpersonal.me"]
     allow_methods = ["OPTIONS", "POST"]
     allow_headers = ["*"]
     max_age       = 3000
