@@ -27,7 +27,7 @@ resource "aws_s3_bucket_acl" "bta_panel" {
   depends_on = [aws_s3_bucket_ownership_controls.bta_panel]
 }
 
-resource "aws_s3_bucket_policy" "bta_panel" {
+resource "aws_s3_bucket_policy" "bta_panel_oac_access" {
   bucket = aws_s3_bucket.bta_panel.id
 
   policy = jsonencode({
@@ -35,11 +35,14 @@ resource "aws_s3_bucket_policy" "bta_panel" {
     Id      = "AllowGetObjects"
     Statement = [
       {
-        Sid       = "AllowPublic"
+        Sid       = "AllowOAC"
         Effect    = "Allow"
-        Principal = aws_cloudfront_origin_access_identity.bta_panel.iam_arn
+        Principal = aws_cloudfront_distribution.bta_panel.arn
         Action    = "s3:GetObject"
-        Resource  = "${aws_s3_bucket.bta_panel.arn}/**"
+        Resources = [
+          "${aws_s3_bucket.bta_panel.arn}",
+          "${aws_s3_bucket.bta_panel.arn}/*"
+        ]
       }
     ]
   })
