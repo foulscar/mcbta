@@ -2,11 +2,6 @@ resource "aws_s3_bucket" "bta_panel" {
   bucket = "corbinmcbtacontrolpanel"
 }
 
-resource "aws_s3_bucket_acl" "bta_panel" {
-  bucket = aws_s3_bucket.bta_panel.id
-  acl    = "private"
-}
-
 resource "aws_s3_bucket_website_configuration" "bta_panel" {
   bucket = aws_s3_bucket.bta_panel.id
 
