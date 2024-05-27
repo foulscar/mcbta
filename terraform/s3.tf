@@ -27,18 +27,6 @@ resource "aws_s3_bucket_acl" "bta_panel" {
   depends_on = [aws_s3_bucket_ownership_controls.bta_panel]
 }
 
-resource "aws_s3_bucket_website_configuration" "bta_panel" {
-  bucket = aws_s3_bucket.bta_panel.id
-
-  index_document {
-    suffix = "index.html"
-  }
-
-  error_document {
-    key = "index.html"
-  }
-}
-
 resource "aws_s3_bucket_policy" "bta_panel" {
   bucket = aws_s3_bucket.bta_panel.id
 

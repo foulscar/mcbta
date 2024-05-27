@@ -5,7 +5,7 @@ resource "aws_cloudfront_distribution" "bta_panel" {
 
   origin {
     origin_id   = "${aws_s3_bucket.bta_panel.id}-origin"
-    domain_name = aws_s3_bucket_website_configuration.bta_panel.website_domain
+    domain_name = aws_s3_bucket.bta_panel.id
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.bta_panel.cloudfront_access_identity_path
