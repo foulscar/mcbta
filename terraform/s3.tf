@@ -49,7 +49,7 @@ resource "aws_s3_bucket_policy" "bta_panel" {
       {
         Sid       = "AllowPublic"
         Effect    = "Allow"
-        Principal = aws_cloudfront_origin_access_identity.iam_arn
+        Principal = aws_cloudfront_origin_access_identity.bta_panel.iam_arn
         Action    = "s3:GetObject"
         Resource  = "${aws_s3_bucket.bta_panel.arn}/**"
       }
