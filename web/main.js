@@ -6,7 +6,7 @@ document.getElementById('form-main').addEventListener('submit', function(event) 
     var otp = otpNUM.toString();
 
     // Send data to API as JSON with OTP as Bearer token
-    fetch('https://cors-anywhere.herokuapp.com/https://api.bta.corbinpersonal.me/operate', {
+    fetch('https://api.bta.corbinpersonal.me/operate', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
