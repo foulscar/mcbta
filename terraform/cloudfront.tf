@@ -40,8 +40,11 @@ resource "aws_cloudfront_distribution" "bta_panel" {
   }
 
   viewer_certificate {
-    cloudfront_default_certificate = true
+    acm_certificate_arn = aws_acm_certificate.bta_panel.arn
+    ssl_support_method  = "sni-only"
   }
 
   price_class = "PriceClass_100"
+
+  depends_on = [aws_acm_certificate_validation.bta_panel]
 }
