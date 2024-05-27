@@ -47,7 +47,10 @@ resource "aws_s3_bucket_policy" "bta_panel_oac_access" {
     ]
   })
 
-  depends_on = [aws_s3_bucket_public_access_block.bta_panel]
+  depends_on = [
+    aws_s3_bucket_public_access_block.bta_panel,
+    aws_cloudfront_origin_access_control.bta_panel
+  ]
 }
 
 module "bta_panel_web_files" {
