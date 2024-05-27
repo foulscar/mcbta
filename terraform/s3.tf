@@ -2,6 +2,31 @@ resource "aws_s3_bucket" "bta_panel" {
   bucket = "corbinmcbtacontrolpanel"
 }
 
+resource "aws_s3_bucket_public_access_block" "bta_panel" {
+  bucket = aws_s3_bucket.bta_panel.id
+
+  block_public_acls       = false
+  block_public_policy     = false
+  ignore_public_acls      = false
+  restrict_public_buckets = false
+}
+
+resource "aws_s3_bucket_ownership_controls" "bta_panel" {
+  bucket = aws_s3_bucket.bta_panel.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+
+  depends_on = [aws_s3_bucket_public_access_block.bta_panel]
+}
+
+resource "aws_s3_bucket_acl" "bta_panel" {
+  bucket = aws_s3_bucket.bta_panel.id
+  acl    = "private"
+
+  depends_on = [aws_s3_bucket_ownership_controls.bta_panel]
+}
+
 resource "aws_s3_bucket_website_configuration" "bta_panel" {
   bucket = aws_s3_bucket.bta_panel.id
 
@@ -30,6 +55,8 @@ resource "aws_s3_bucket_policy" "bta_panel" {
       }
     ]
   })
+
+  depends_on = [aws_s3_bucket_public_access_block.bta_panel]
 }
 
 module "bta_panel_web_files" {
