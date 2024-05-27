@@ -5,7 +5,7 @@ resource "aws_cloudfront_distribution" "bta_panel" {
 
   origin {
     origin_id   = "${aws_s3_bucket.bta_panel.id}-origin"
-    domain_name = aws_s3_bucket.bta_panel.id
+    domain_name = aws_s3_bucket.bta_panel.bucket_domain_name
 
     s3_origin_config {
       origin_access_identity = aws_cloudfront_origin_access_identity.bta_panel.cloudfront_access_identity_path
@@ -14,8 +14,9 @@ resource "aws_cloudfront_distribution" "bta_panel" {
 
   default_cache_behavior {
     target_origin_id = "${aws_s3_bucket.bta_panel.id}-origin"
-    allowed_methods  = ["GET", "HEAD"]
-    cached_methods   = ["GET", "HEAD"]
+
+    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    cached_methods  = ["GET", "HEAD"]
 
     forwarded_values {
       query_string = true
