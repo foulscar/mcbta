@@ -37,12 +37,12 @@ resource "aws_s3_bucket_policy" "bta_panel_oac_access" {
       {
         Sid       = "AllowOAC"
         Effect    = "Allow"
-        Principal = { "AWS" : [aws_cloudfront_distribution.bta_panel.arn] }
+        Principal = { "Service" : "cloudfront.amazonaws.com" }
         Action    = "s3:GetObject"
-        Resource = [
-          "${aws_s3_bucket.bta_panel.arn}",
-          "${aws_s3_bucket.bta_panel.arn}/*"
-        ]
+        Resource  = "${aws_s3_bucket.bta_panel.arn}/*"
+        Condition = {
+          StringEquals = { "AWS:SourceArn" = aws_cloudfront_distribution.bta_panel.arn }
+        }
       }
     ]
   })
